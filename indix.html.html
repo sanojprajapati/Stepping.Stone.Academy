@@ -1,0 +1,3315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Result - Stepping Stone Academy</title>
+
+<style>
+
+/* =========================
+   BASIC
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef3f8;
+    color: #222;
+}
+
+.container {
+    width: 95%;
+    max-width: 1100px;
+    margin: 25px auto;
+}
+
+
+/* =========================
+   SEARCH BOX
+========================= */
+
+.search-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    margin-bottom: 25px;
+}
+
+.search-box h2 {
+    text-align: center;
+    color: #123b70;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #1769aa;
+}
+
+.button-area {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-area button,
+.print-area button {
+    background: #1769aa;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.button-area button:hover,
+.print-area button:hover {
+    background: #0d4778;
+}
+
+.clear-btn {
+    background: #777 !important;
+}
+
+.hint {
+    text-align: center;
+    margin-top: 10px;
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESULT SHEET
+========================= */
+
+.result-sheet {
+    display: none;
+    background: white;
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+}
+
+
+/* =========================
+   SCHOOL HEADER
+========================= */
+
+.school-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-bottom: 3px solid #123b70;
+    padding-bottom: 15px;
+}
+
+.logo-box img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+}
+
+.school-details {
+    text-align: center;
+    flex: 1;
+}
+
+.school-details h1 {
+    font-size: 28px;
+    color: #123b70;
+}
+
+.school-details p {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.school-details h2 {
+    margin-top: 10px;
+    color: #222;
+    font-size: 20px;
+}
+
+.session {
+    font-weight: bold;
+}
+
+
+/* =========================
+   RESULT TITLE
+========================= */
+
+.result-title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.result-title span {
+    background: #123b70;
+    color: white;
+    padding: 9px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   STUDENT DETAILS
+========================= */
+
+.student-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #bbb;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.student-info {
+    flex: 1;
+}
+
+.info-row {
+    margin: 8px 0;
+}
+
+.info-row strong {
+    display: inline-block;
+    width: 150px;
+}
+
+.student-photo img {
+    width: 105px;
+    height: 125px;
+    object-fit: cover;
+    border: 2px solid #333;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    border: 1px solid #777;
+    padding: 10px;
+    text-align: center;
+}
+
+thead th {
+    background: #123b70;
+    color: white;
+}
+
+tfoot th {
+    background: #e8eef5;
+}
+
+.pass {
+    color: green;
+    font-weight: bold;
+}
+
+.fail {
+    color: red;
+    font-weight: bold;
+}
+
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.summary-box {
+    border: 1px solid #aaa;
+    padding: 15px;
+    text-align: center;
+    background: #f6f8fa;
+}
+
+.summary-box span {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.summary-box strong {
+    font-size: 20px;
+}
+
+
+/* =========================
+   REMARK
+========================= */
+
+.remark {
+    margin-top: 18px;
+    padding: 12px;
+    border: 1px solid #bbb;
+}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+.signature-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+    padding: 0 40px;
+    text-align: center;
+}
+
+.signature-line {
+    width: 170px;
+    border-top: 1px solid #333;
+    margin-bottom: 8px;
+}
+
+
+/* =========================
+   PRINT
+========================= */
+
+.print-area {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 700px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .school-header {
+        flex-direction: column;
+    }
+
+    .school-details h1 {
+        font-size: 22px;
+    }
+
+    .student-section {
+        flex-direction: column-reverse;
+        gap: 15px;
+    }
+
+    .student-info {
+        width: 100%;
+    }
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .signature-area {
+        padding: 0;
+    }
+
+}
+
+
+/* =========================
+   PRINT SETTINGS
+========================= */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .search-box,
+    .print-area {
+        display: none !important;
+    }
+
+    .result-sheet {
+        display: block !important;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .school-header {
+        border-bottom: 2px solid #000;
+    }
+
+    table th,
+    table td {
+        padding: 7px;
+    }
+
+    .summary-box {
+        padding: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =================================
+     SEARCH AREA
+================================= -->
+
+<div class="search-box">
+
+    <h2>Student Result</h2>
+
+    <div class="form-row">
+
+
+        <div class="form-group">
+
+            <label>Select Class</label>
+
+            <select id="classSelect">
+
+                <option value="10th">10th</option>
+
+                <option value="9th">9th</option>
+
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Select Examination</label>
+
+            <select id="examSelect">
+
+                <option value="quarterly">
+                    Quarterly Examination
+                </option>
+
+                <option value="halfyearly">
+                    Half Yearly Examination
+                </option>
+
+                <option value="annual">
+                    Annual Examination
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>Roll Number</label>
+
+            <input
+                type="text"
+                id="rollNumber"
+                placeholder="Enter Roll Number"
+                autocomplete="off"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="button-area">
+
+        <button onclick="showResult(true)">
+            VIEW RESULT
+        </button>
+
+        <button
+            class="clear-btn"
+            onclick="hideResult()"
+        >
+            CLEAR
+        </button>
+
+    </div>
+
+
+    <p class="hint">
+        Roll Number डालते ही Result Automatically दिखाई देगा।
+    </p>
+
+</div>
+
+
+
+<!-- =================================
+     RESULT SHEET
+================================= -->
+
+<div id="resultSheet" class="result-sheet">
+
+
+    <!-- SCHOOL HEADER -->
+
+    <div class="school-header">
+
+
+        <div class="logo-box">
+
+            <img
+                id="photo/school logo.jpeg"
+                src="photo/school logo.jpeg"
+                alt="photo/school logo.jpeg"
+            >
+
+        </div>
+
+
+        <div class="school-details">
+
+            <h1 id="schoolName">
+                STEPPING STONE ACADEMY
+            </h1>
+
+            <p id="schoolAddress">
+                Fagujhot, Sumerpur, Mahulani,
+                Brijmanganj, Maharajganj
+            </p>
+
+            <h2 id="examTitle">
+                Quarterly Examination
+            </h2>
+
+            <p class="session">
+
+                Session:
+                <span id="sessionText">
+                    2026 - 2027
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RESULT TITLE -->
+
+    <div class="result-title">
+
+        <span>
+            STUDENT PROGRESS REPORT
+        </span>
+
+    </div>
+
+
+
+    <!-- STUDENT INFORMATION -->
+
+    <div class="student-section">
+
+
+        <div class="student-info">
+
+
+            <div class="info-row">
+
+                <strong>
+                    Student Name:
+                </strong>
+
+                <span id="studentName"></span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Father's Name:
+                </strong>
+
+                <span id="fatherName"></span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Roll Number:
+                </strong>
+
+                <span id="studentRoll"></span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Class:
+                </strong>
+
+                <span id="studentClass"></span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="student-photo">
+
+            <img
+                id="studentPhoto"
+                src=""
+                alt="Student Photo"
+            >
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- MARKS TABLE -->
+
+    <div class="table-container">
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>S.No.</th>
+
+                    <th>Subject</th>
+
+                    <th>
+                        Maximum Marks
+                    </th>
+
+                    <th>
+                        Obtained Marks
+                    </th>
+
+                    <th>Grade</th>
+
+                    <th>Result</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="marksTableBody">
+            </tbody>
+
+
+            <tfoot>
+
+                <tr>
+
+                    <th colspan="2">
+                        TOTAL
+                    </th>
+
+                    <th id="totalMaximum">
+                        420
+                    </th>
+
+                    <th id="totalObtained">
+                        0
+                    </th>
+
+                    <th id="overallGrade">
+                        -
+                    </th>
+
+                    <th id="overallResult">
+                        -
+                    </th>
+
+                </tr>
+
+            </tfoot>
+
+
+        </table>
+
+    </div>
+
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+
+        <div class="summary-box">
+
+            <span>
+                Total Marks
+            </span>
+
+            <strong id="summaryMaximum">
+                420
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                Obtained Marks
+            </span>
+
+            <strong id="summaryObtained">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                Percentage
+            </span>
+
+            <strong id="percentage">
+                0%
+            </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span>
+                Final Result
+            </span>
+
+            <strong id="finalResult">
+                -
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- REMARK -->
+
+    <div class="remark">
+
+        <strong>
+            Remark:
+        </strong>
+
+        <span id="remarkText">
+            -
+        </span>
+
+    </div>
+
+
+
+    <!-- SIGNATURE -->
+
+    <div class="signature-area">
+
+
+        <div>
+
+            <div class="signature-line"></div>
+
+            <strong>
+                Class Teacher
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <div class="signature-line"></div>
+
+            <strong>
+                Principal
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- PRINT BUTTON -->
+
+    <div class="print-area">
+
+        <button onclick="printResult()">
+            🖨 PRINT RESULT
+        </button>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =================================
+     JAVASCRIPT
+================================= -->
+
+<script>
+
+
+/* =================================
+   SCHOOL INFORMATION
+================================= */
+
+const SCHOOL = {
+
+    name: "STEPPING STONE ACADEMY",
+
+    address:
+        "Fagujhot, Sumerpur, Mahulani, Brijmanganj, Maharajganj",
+
+    logo: "school-logo.png",
+
+    session: "2026 - 2027"
+
+};
+
+
+
+/* =================================
+   RESULT SETTINGS
+================================= */
+
+const RESULT_SETTINGS = {
+
+    maximumMarksPerSubject: 70,
+
+    passingMarksPerSubject: 23,
+
+    totalSubjects: 6
+
+};
+
+
+
+/* =================================
+   SUBJECTS
+================================= */
+
+const SUBJECTS = [
+
+    "Hindi",
+    "English",
+    "Math",
+    "Science",
+    "SST",
+    "Art"
+
+];
+
+
+
+/* =================================
+   STUDENT DATABASE
+
+   YAHAN STUDENT DETAILS EDIT KAREIN
+================================= */
+
+const STUDENTS = {
+
+
+    "101": {
+
+        name: "Sufiya Khatun",
+
+        father: " Mo.Arif  ",
+
+        class: "9th",
+
+        photo: "101.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 50,
+                English: 28,
+                Math: 47,
+                Science: 50,
+                SST: 42,
+                Art: 57
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 60,
+                English: 62,
+                Math: 58,
+                Science: 61,
+                SST: 63,
+                Art: 67
+
+            },
+
+
+            annual: {
+
+                Hindi: 65,
+                English: 66,
+                Math: 62,
+                Science: 64,
+                SST: 68,
+                Art: 70
+
+            }
+
+        }
+
+    },
+
+
+
+    "102": {
+
+        name: "Tabassun Afrin",
+
+        father: "Mohiddin",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 12,
+                English: 22,
+                Math: 18,
+                Science: 15,
+                SST: 9,
+                Art: 27
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "103": {
+
+        name: "Roshani Yadav",
+
+        father: "Rambahadur Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 41,
+                English: 33,
+                Math: 25,
+                Science: 26,
+                SST: 24,
+                Art: 49
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+     "104": {
+
+        name: "Sunita yadav",
+
+        father: "Sugreev",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 36,
+                English: 15,
+                Math: 32,
+                Science: 30,
+                SST: 20,
+                Art: 40
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "105": {
+
+        name: "Sonam",
+
+        father: "kashi Gupta",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 30,
+                English: 39,
+                Math: 34,
+                Science: 34,
+                SST: 20,
+                Art: 33
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "106": {
+
+        name: "Nitesh",
+
+        father: "jogeider",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 43,
+                English: 30,
+                Math: 44,
+                Science: 46,
+                SST: 35,
+                Art: 53
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "107": {
+
+        name: "Shani chauhan",
+
+        father: "Sajan chauhan",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 13,
+                English: 11,
+                Math: 18,
+                Science: 12,
+                SST: 0,
+                Art: 0
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+
+    "108": {
+
+        name: "Rajnand Yadav",
+
+        father: "umanand Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 26,
+                English: 23,
+                Math: 21,
+                Science: 38,
+                SST: 20,
+                Art: 59
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "109": {
+
+        name: "Styamt Paswan",
+
+        father: "Dasharath Paswan",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 30,
+                English: 21,
+                Math: 19,
+                Science: 29,
+                SST: 24,
+                Art: 54
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "110": {
+
+        name: "Subham Chaudhari",
+
+        father: "Durga Prasad",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 6,
+                English: 18,
+                Math: 21,
+                Science: 21,
+                SST: 10,
+                Art: 40
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "111": {
+
+        name: "Kishan Yadav",
+
+        father: "Santosh Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 60,
+                English: 55,
+                Math: 59,
+                Science: 57,
+                SST: 51,
+                Art: 60
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "112": {
+
+        name: "Sanjana Prajapati",
+
+        father: "Radheshyam",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 30,
+                English: 25,
+                Math: 15,
+                Science: 37,
+                SST: 16,
+                Art: 31
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+    "113": {
+
+        name: "Anshika Yadav",
+
+        father: "Surendar Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 6,
+                English: 12,
+                Math: 19,
+                Science: 9,
+                SST: 3,
+                Art: 41
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+     "114": {
+
+        name: "Sanjana Chauhan",
+
+        father: "Rambakas Chauhan",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 11,
+                English: 17,
+                Math: 14,
+                Science: 39,
+                SST: 26,
+                Art: 24
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+ "115": {
+
+        name: "Vivek Yadav",
+
+        father: "Rajesh Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 55,
+                English: 0,
+                Math: 40,
+                Science: 43,
+                SST: 50,
+                Art: 50
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+ "116": {
+
+        name: "Kishan Gaud",
+
+        father: "paremchand Gaud",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 10,
+                English: 0,
+                Math: 14,
+                Science: 16,
+                SST: 17,
+                Art: 32
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+ "117": {
+
+        name: "Prasant Yadav",
+
+        father: "Mahendra Yadav",
+
+        class: "9th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 9,
+                English: 12,
+                Math: 6,
+                Science: 17,
+                SST: 25,
+                Art: 34
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+ "201": {
+
+        name: "Anjali",
+
+        father: "Virendra",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 47,
+                English: 44,
+                Math: 29,
+                Science: 42,
+                SST: 24,
+                Art: 48
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+ "202": {
+
+        name: "Susmita",
+
+        father: "Ramdhani",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 45,
+                English: 41,
+                Math: 29,
+                Science: 38,
+                SST: 18,
+                Art: 40
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+"203": {
+
+        name: "Karishma",
+
+        father: "Subhash",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 22,
+                English: 34,
+                Math: 27,
+                Science: 37,
+                SST: 12,
+                Art: 56
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"204": {
+
+        name: "Partibha",
+
+        father: "Ramshankar",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 51,
+                English: 47,
+                Math: 43,
+                Science: 49,
+                SST: 40,
+                Art: 50
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"205": {
+
+        name: "jyotsana",
+
+        father: "Narayan",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 30,
+                English: 41,
+                Math: 19,
+                Science: 37,
+                SST: 28,
+                Art: 48
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"206": {
+
+        name: "Geeta",
+
+        father: "Premshankar",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 7,
+                English: 36,
+                Math: 18,
+                Science: 27,
+                SST: 15,
+                Art: 30
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"207": {
+
+        name: "Akash Pal",
+
+        father: "Chandrabhan pal",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 46,
+                English: 50,
+                Math: 43,
+                Science: 60,
+                SST: 43,
+                Art: 63
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"208": {
+
+        name: "Anurag",
+
+        father: "Ramraj",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 12,
+                English: 43,
+                Math: 24,
+                Science: 35,
+                SST: 21,
+                Art: 46
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"209": {
+
+        name: "yuraj Varma",
+
+        father: "Pintu varma",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 44,
+                English: 55,
+                Math: 44,
+                Science: 48,
+                SST: 35,
+                Art: 52
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"210": {
+
+        name: "Gagabdeep",
+
+        father: "Gangesh Paswan",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 55,
+                English: 61,
+                Math: 42,
+                Science: 57,
+                SST: 45,
+                Art: 57
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"211": {
+
+        name: "Ramanad Gupta",
+
+        father: "Pramod Gupta",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 18,
+                English: 27,
+                Math: 19,
+                Science: 24,
+                SST: 16,
+                Art: 38
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"212": {
+
+        name: "Sabir",
+
+        father: "Mohammad Hussein",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 24,
+                English: 40,
+                Math: 25,
+                Science: 34,
+                SST: 34,
+                Art: 54
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"213": {
+
+        name: "Indresh Yadav",
+
+        father: "Shambhu yadav",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 24,
+                English: 0,
+                Math: 22,
+                Science: 27,
+                SST: 19,
+                Art: 40
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"214": {
+
+        name: "Akhilesh Patel",
+
+        father: "Ramkishan patel",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 21,
+                English: 22,
+                Math: 22,
+                Science: 31,
+                SST: 16,
+                Art: 47
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+"215": {
+
+        name: "Neelu",
+
+        father: "Sanjay kumar",
+
+        class: "10th",
+
+        photo: "102.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 28,
+                English: 22,
+                Math: 24,
+                Science: 33,
+                SST: 18,
+                Art: 56
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 52,
+                English: 56,
+                Math: 55,
+                Science: 58,
+                SST: 54,
+                Art: 62
+
+            },
+
+
+            annual: {
+
+                Hindi: 58,
+                English: 61,
+                Math: 60,
+                Science: 63,
+                SST: 59,
+                Art: 66
+
+            }
+
+        }
+
+    },
+
+
+
+
+    "1": {
+
+        name: "Aman Singh",
+
+        father: "Rajendra Singh",
+
+        class: "8th",
+
+        photo: "201.jpg",
+
+        exams: {
+
+
+            quarterly: {
+
+                Hindi: 50,
+                English: 48,
+                Math: 55,
+                Science: 51,
+                SST: 53,
+                Art: 60
+
+            },
+
+
+            halfyearly: {
+
+                Hindi: 55,
+                English: 54,
+                Math: 59,
+                Science: 57,
+                SST: 56,
+                Art: 63
+
+            },
+
+
+            annual: {
+
+                Hindi: 61,
+                English: 60,
+                Math: 64,
+                Science: 62,
+                SST: 65,
+                Art: 68
+
+            }
+
+        }
+
+    }
+
+
+};
+
+
+
+/* =================================
+   PAGE LOAD
+================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        document.getElementById(
+            "schoolName"
+        ).textContent = SCHOOL.name;
+
+
+        document.getElementById(
+            "schoolAddress"
+        ).textContent = SCHOOL.address;
+
+
+        document.getElementById(
+            "schoolLogo"
+        ).src = SCHOOL.logo;
+
+
+        document.getElementById(
+            "sessionText"
+        ).textContent = SCHOOL.session;
+
+
+
+        /* Roll number automatic result */
+
+        document
+        .getElementById("rollNumber")
+        .addEventListener(
+            "input",
+            function () {
+
+                const roll =
+                    this.value.trim();
+
+
+                if (STUDENTS[roll]) {
+
+                    showResult(false);
+
+                }
+
+            }
+        );
+
+
+
+        /* Class change */
+
+        document
+        .getElementById("classSelect")
+        .addEventListener(
+            "change",
+            function () {
+
+                autoShowResult();
+
+            }
+        );
+
+
+
+        /* Exam change */
+
+        document
+        .getElementById("examSelect")
+        .addEventListener(
+            "change",
+            function () {
+
+                autoShowResult();
+
+            }
+        );
+
+
+
+        /* Enter key */
+
+        document
+        .getElementById("rollNumber")
+        .addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    showResult(true);
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =================================
+   AUTO SHOW RESULT
+================================= */
+
+function autoShowResult() {
+
+
+    const roll =
+        document
+        .getElementById("rollNumber")
+        .value
+        .trim();
+
+
+    if (STUDENTS[roll]) {
+
+        showResult(false);
+
+    }
+
+}
+
+
+
+/* =================================
+   SHOW RESULT
+================================= */
+
+function showResult(showMessage = true) {
+
+
+    const roll =
+        document
+        .getElementById("rollNumber")
+        .value
+        .trim();
+
+
+    const selectedClass =
+        document
+        .getElementById("classSelect")
+        .value;
+
+
+    const selectedExam =
+        document
+        .getElementById("examSelect")
+        .value;
+
+
+
+    /* Empty roll */
+
+    if (!roll) {
+
+        if (showMessage) {
+
+            alert(
+                "Please enter Roll Number."
+            );
+
+        }
+
+        return;
+
+    }
+
+
+
+    /* Find student */
+
+    const student =
+        STUDENTS[roll];
+
+
+    if (!student) {
+
+        if (showMessage) {
+
+            alert(
+                "Student not found. Please check Roll Number."
+            );
+
+        }
+
+        return;
+
+    }
+
+
+
+    /* Class check */
+
+    if (student.class !== selectedClass) {
+
+        if (showMessage) {
+
+            alert(
+                "This Roll Number belongs to Class "
+                + student.class
+            );
+
+        }
+
+        return;
+
+    }
+
+
+
+    /* Examination */
+
+    let examName = "";
+
+
+    if (
+        selectedExam === "quarterly"
+    ) {
+
+        examName =
+            "Quarterly Examination";
+
+    }
+
+    else if (
+        selectedExam === "halfyearly"
+    ) {
+
+        examName =
+            "Half Yearly Examination";
+
+    }
+
+    else {
+
+        examName =
+            "Annual Examination";
+
+    }
+
+
+
+    /* Student details */
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        student.name;
+
+
+    document.getElementById(
+        "fatherName"
+    ).textContent =
+        student.father;
+
+
+    document.getElementById(
+        "studentRoll"
+    ).textContent =
+        roll;
+
+
+    document.getElementById(
+        "studentClass"
+    ).textContent =
+        student.class;
+
+
+
+    /* Photo */
+
+    document.getElementById(
+        "studentPhoto"
+    ).src =
+        student.photo;
+
+
+
+    /* Exam */
+
+    document.getElementById(
+        "examTitle"
+    ).textContent =
+        examName;
+
+
+
+    /* Marks */
+
+    const marks =
+        student.exams[selectedExam];
+
+
+    createMarksTable(marks);
+
+
+
+    /* Show result */
+
+    document.getElementById(
+        "resultSheet"
+    ).style.display =
+        "block";
+
+}
+
+
+
+/* =================================
+   CREATE MARKS TABLE
+================================= */
+
+function createMarksTable(marks) {
+
+
+    const tbody =
+        document.getElementById(
+            "marksTableBody"
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    let totalObtained = 0;
+
+    let studentPassed = true;
+
+
+
+    SUBJECTS.forEach(
+        function (subject, index) {
+
+
+            const obtained =
+                Number(
+                    marks[subject] || 0
+                );
+
+
+            const maximum =
+                RESULT_SETTINGS
+                .maximumMarksPerSubject;
+
+
+            const grade =
+                getGrade(obtained);
+
+
+            const passed =
+                obtained >=
+                RESULT_SETTINGS
+                .passingMarksPerSubject;
+
+
+
+            if (!passed) {
+
+                studentPassed = false;
+
+            }
+
+
+
+            totalObtained += obtained;
+
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${subject}
+                </td>
+
+                <td>
+                    ${maximum}
+                </td>
+
+                <td>
+                    ${obtained}
+                </td>
+
+                <td>
+                    ${grade}
+                </td>
+
+                <td class="${passed ? "pass" : "fail"}">
+                    ${passed ? "PASS" : "FAIL"}
+                </td>
+
+            `;
+
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+
+
+    /* Total */
+
+    const maximumTotal =
+        RESULT_SETTINGS
+        .maximumMarksPerSubject
+        *
+        RESULT_SETTINGS
+        .totalSubjects;
+
+
+
+    /* Percentage */
+
+    const percentage =
+        (
+            totalObtained /
+            maximumTotal
+        ) * 100;
+
+
+
+    /* Overall Grade */
+
+    const overallGrade =
+        getOverallGrade(
+            percentage
+        );
+
+
+
+    /* Final Result */
+
+    const finalResult =
+        studentPassed
+            ? "PASS"
+            : "FAIL";
+
+
+
+    /* Table */
+
+    document.getElementById(
+        "totalMaximum"
+    ).textContent =
+        maximumTotal;
+
+
+    document.getElementById(
+        "totalObtained"
+    ).textContent =
+        totalObtained;
+
+
+    document.getElementById(
+        "overallGrade"
+    ).textContent =
+        overallGrade;
+
+
+    document.getElementById(
+        "overallResult"
+    ).textContent =
+        finalResult;
+
+
+    document.getElementById(
+        "overallResult"
+    ).className =
+        studentPassed
+            ? "pass"
+            : "fail";
+
+
+
+    /* Summary */
+
+    document.getElementById(
+        "summaryMaximum"
+    ).textContent =
+        maximumTotal;
+
+
+    document.getElementById(
+        "summaryObtained"
+    ).textContent =
+        totalObtained;
+
+
+    document.getElementById(
+        "percentage"
+    ).textContent =
+        percentage.toFixed(2)
+        + "%";
+
+
+    document.getElementById(
+        "finalResult"
+    ).textContent =
+        finalResult;
+
+
+    document.getElementById(
+        "finalResult"
+    ).className =
+        studentPassed
+            ? "pass"
+            : "fail";
+
+
+
+    /* Remark */
+
+    document.getElementById(
+        "remarkText"
+    ).textContent =
+
+        studentPassed
+
+        ?
+
+        "Congratulations! You have passed the examination."
+
+        :
+
+        "You need improvement in one or more subjects.";
+
+}
+
+
+
+/* =================================
+   SUBJECT GRADE
+================================= */
+
+function getGrade(marks) {
+
+
+    if (marks >= 60) {
+
+        return "A+";
+
+    }
+
+    else if (marks >= 50) {
+
+        return "A";
+
+    }
+
+    else if (marks >= 40) {
+
+        return "B";
+
+    }
+
+    else if (marks >= 33) {
+
+        return "C";
+
+    }
+
+    else if (marks >= 23) {
+
+        return "D";
+
+    }
+
+    else {
+
+        return "F";
+
+    }
+
+}
+
+
+
+/* =================================
+   OVERALL GRADE
+================================= */
+
+function getOverallGrade(
+    percentage
+) {
+
+
+    if (percentage >= 85) {
+
+        return "A+";
+
+    }
+
+    else if (percentage >= 70) {
+
+        return "A";
+
+    }
+
+    else if (percentage >= 55) {
+
+        return "B";
+
+    }
+
+    else if (percentage >= 40) {
+
+        return "C";
+
+    }
+
+    else if (percentage >= 33) {
+
+        return "D";
+
+    }
+
+    else {
+
+        return "F";
+
+    }
+
+}
+
+
+
+/* =================================
+   CLEAR
+================================= */
+
+function hideResult() {
+
+
+    document.getElementById(
+        "resultSheet"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "rollNumber"
+    ).value = "";
+
+}
+
+
+
+/* =================================
+   PRINT
+================================= */
+
+function printResult() {
+
+    window.print();
+
+}
+
+</script>
+
+
+</body>
+</html>
